@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-// Configure axios to use the Flask backend
-axios.defaults.baseURL = 'http://localhost:5000';
+// Configure axios to use the Flask backend from environment variable
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 import './App.css';
 
 function App() {
