@@ -42,14 +42,7 @@ project-root/
 - Python 3.8+
 - pip
 
-### 1. Clone the Repository
-
-```sh
-git clone <your-repo-url>
-cd <project-root>
-```
-
-### 2. Backend Setup
+### 1. Backend Setup
 
 ```sh
 cd backend
@@ -59,7 +52,7 @@ python app.py
 
 The backend will run on `http://localhost:5000` by default.
 
-### 3. Frontend Setup
+### 2. Frontend Setup
 
 ```sh
 cd ../frontend
@@ -80,8 +73,7 @@ The frontend will run on `http://localhost:3000` by default.
 
 **Public URLs:**
 
-- Frontend: [https://your-frontend-url](https://your-frontend-url)
-- Backend: [https://your-backend-url](https://your-backend-url)
+- Frontend: [https://posture-detection-app-five.vercel.app/](https://posture-detection-app-five.vercel.app/)
 
 ---
 
