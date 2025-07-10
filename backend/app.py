@@ -702,6 +702,12 @@ def analyze_video():
                     })
                 else:
                     stats['goodPostureFrames'] += 1
+                    feedback.append({
+                        'frame': frame_count,
+                        'message': result['message'],
+                        'type': 'success',
+                        'timestamp': datetime.now().isoformat()
+                    })
                     
             except Exception as frame_error:
                 print(f"Error analyzing frame {frame_count}: {frame_error}")

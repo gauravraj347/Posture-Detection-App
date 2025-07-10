@@ -68,18 +68,17 @@ The frontend will run on `http://localhost:3000` by default.
 
 ## Deployment
 
-- **Backend:** Deployed on [Render](https://render.com/) (or your chosen platform)
 - **Frontend:** Deployed on [Vercel](https://vercel.com/) or [Netlify](https://netlify.com/)
 
 **Public URLs:**
 
-- Frontend: [https://posture-detection-app-five.vercel.app/](https://posture-detection-app-five.vercel.app/)
+- Frontend: [https://posture-detection-app-five.vercel.app](https://posture-detection-app-five.vercel.app/)
 
 ---
 
 ## Demo Video
 
-- [Watch the demo video](https://your-demo-video-link)
+- [Watch the demo video](https://drive.google.com/file/d/1hg5b3lL6RUjVxoW9pBOOOc-qBeSR5_yv/view?usp=sharing)
 
 ---
 
