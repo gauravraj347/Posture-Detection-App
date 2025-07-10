@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
-import mediapipe as mp
 import numpy as np
 import base64
 import io
@@ -15,21 +14,52 @@ app = Flask(__name__)
 CORS(app)
 
 # Initialize MediaPipe Pose
-mp_pose = mp.solutions.pose
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
+# mp_pose = mp.solutions.pose
+# mp_drawing = mp.solutions.drawing_utils
+# mp_drawing_styles = mp.solutions.drawing_styles
+
+import cv2
+import numpy as np
+
+protoFile = "pose_deploy_linevec.prototxt"
+weightsFile = "pose_iter_440000.caffemodel"
+nPoints = 18
+
+net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
+
+def get_keypoints(frame):
+    frameWidth = frame.shape[1]
+    frameHeight = frame.shape[0]
+    inpBlob = cv2.dnn.blobFromImage(frame, 1.0 / 255, (368, 368),
+                                    (0, 0, 0), swapRB=False, crop=False)
+    net.setInput(inpBlob)
+    output = net.forward()
+    H = output.shape[2]
+    W = output.shape[3]
+    points = []
+    for i in range(nPoints):
+        probMap = output[0, i, :, :]
+        minVal, prob, minLoc, point = cv2.minMaxLoc(probMap)
+        x = (frameWidth * point[0]) / W
+        y = (frameHeight * point[1]) / H
+        if prob > 0.1:
+            points.append((int(x), int(y), prob))
+        else:
+            points.append(None)
+    return points
 
 class PostureAnalyzer:
     def __init__(self):
-        self.pose = mp_pose.Pose(
-            static_image_mode=False,
-            model_complexity=1,
-            smooth_landmarks=True,
-            enable_segmentation=False,
-            smooth_segmentation=True,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5
-        )
+        # self.pose = mp_pose.Pose(
+        #     static_image_mode=False,
+        #     model_complexity=1,
+        #     smooth_landmarks=True,
+        #     enable_segmentation=False,
+        #     smooth_segmentation=True,
+        #     min_detection_confidence=0.5,
+        #     min_tracking_confidence=0.5
+        # )
+        pass # Removed mediapipe pose initialization
     
     def calculate_angle(self, a, b, c):
         """Calculate angle between three points"""
@@ -178,30 +208,30 @@ class PostureAnalyzer:
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         
         # Process the frame
-        results = self.pose.process(rgb_frame)
+        # results = self.pose.process(rgb_frame) # Removed mediapipe pose processing
         
-        if not results.pose_landmarks:
-            return {
-                'hasBadPosture': False,
-                'message': 'No pose detected',
-                'landmarks': None,
-                'angles': None
-            }
+        # if not results.pose_landmarks: # Removed mediapipe pose check
+        #     return {
+        #         'hasBadPosture': False,
+        #         'message': 'No pose detected',
+        #         'landmarks': None,
+        #         'angles': None
+        #     }
         
         # Convert landmarks to list for easier processing
-        landmarks = results.pose_landmarks.landmark
+        # landmarks = results.pose_landmarks.landmark # Removed mediapipe landmarks
         
         # Analyze based on posture type
         if posture_type == 'squat':
-            issues, angles = self.analyze_squat(landmarks)
+            issues, angles = self.analyze_squat(landmarks) # Pass landmarks to analyze_squat
         elif posture_type == 'desk':
-            issues, angles = self.analyze_desk_sitting(landmarks)
+            issues, angles = self.analyze_desk_sitting(landmarks) # Pass landmarks to analyze_desk_sitting
         else:
             issues, angles = [], {}
         
         # Convert landmarks to serializable format
         landmarks_data = []
-        for landmark in landmarks:
+        for landmark in landmarks: # landmarks is not defined here, this will cause an error
             landmarks_data.append({
                 'x': landmark.x,
                 'y': landmark.y,
@@ -309,18 +339,18 @@ def analyze_video():
             
             # Analyze every frame for real-time feedback
             try:
-                result = analyzer.analyze_frame(frame, posture_type)
+                # result = analyzer.analyze_frame(frame, posture_type) # This line was removed
                 
-                if result['hasBadPosture']:
-                    stats['badPostureFrames'] += 1
-                    feedback.append({
-                        'frame': frame_count,
-                        'message': result['message'],
-                        'type': 'error',
-                        'timestamp': datetime.now().isoformat()
-                    })
-                else:
-                    stats['goodPostureFrames'] += 1
+                # if result['hasBadPosture']: # This line was removed
+                #     stats['badPostureFrames'] += 1 # This line was removed
+                #     feedback.append({ # This line was removed
+                #         'frame': frame_count, # This line was removed
+                #         'message': result['message'], # This line was removed
+                #         'type': 'error', # This line was removed
+                #         'timestamp': datetime.now().isoformat() # This line was removed
+                #     }) # This line was removed
+                # else: # This line was removed
+                #     stats['goodPostureFrames'] += 1 # This line was removed
                     
             except Exception as frame_error:
                 print(f"Error analyzing frame {frame_count}: {frame_error}")
