@@ -1,0 +1,64 @@
+/* Additional styles for App component */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.video-element {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* File upload styling */
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.file-upload input[type=file] {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .video-container {
+    max-width: 100%;
+  }
+  
+  .stats-section {
+    grid-template-columns: 1fr;
+  }
+} 
