@@ -339,19 +339,7 @@ def analyze_video():
             
             # Analyze every frame for real-time feedback
             try:
-                # result = analyzer.analyze_frame(frame, posture_type) # This line was removed
-                
-                # if result['hasBadPosture']: # This line was removed
-                #     stats['badPostureFrames'] += 1 # This line was removed
-                #     feedback.append({ # This line was removed
-                #         'frame': frame_count, # This line was removed
-                #         'message': result['message'], # This line was removed
-                #         'type': 'error', # This line was removed
-                #         'timestamp': datetime.now().isoformat() # This line was removed
-                #     }) # This line was removed
-                # else: # This line was removed
-                #     stats['goodPostureFrames'] += 1 # This line was removed
-                    
+                pass  # Placeholder for frame analysis logic
             except Exception as frame_error:
                 print(f"Error analyzing frame {frame_count}: {frame_error}")
                 continue
