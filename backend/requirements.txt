@@ -1,6 +1,6 @@
 Flask
 flask-cors
-mediapipe
+#mediapipe
 opencv-python
 numpy
 Pillow
